@@ -1,20 +1,41 @@
-POUND = 0.453592 #constant for the pound to kg conversion
-INCH = 0.0254 #constant for the inches to meter conversion
+#The universal conversion variables
+global pound, inch
+pound = 0.453592
+inch = 0.0254
 
-weight = float(input("Enter your weight in pounds: ")) #Will ask the user to input their weight in lbs
-height = float(input("Enter your height in inches: ")) #will ask user to input their height in inches
+def calculate_bmi(weight, height):
+    # Convertion of weight and height to metric units
+    kilogram = weight * pound
+    meter = height * inch
+    
+    # Equation/function to calculate BMI
+    bmi = kilogram / (meter ** 2)
+    return bmi
 
-kilograms = POUND * weight #This will convert input from pound to kg
-meters = INCH * height #This will convert input from inches to meters
+# This function will determine BMI category the user inputed
+def bmi_category(bmi):
+    if bmi < 18.5:
+        return "underweight"
+    elif 18.5 <= bmi < 24.9:
+        return "normal weight"
+    elif 25 <= bmi < 29.9:
+        return "overweight"
+    else:
+        return "obese"
 
-bmi = kilograms / (meters * meters) #calculates the BMI
-print(f"Your bmi is {bmi}") #prints it
+# The main function that executes all the functions to print and calculates statements
+def main():
+    try:
+        weight = float(input("Enter your weight in pounds: "))
+        height = float(input("Enter your height in inches: "))
+        
+        bmi = calculate_bmi(weight, height)
+        
+        # Shows the results from the user's inputs
+        print(f"Your BMI is: {bmi:.2f}")
+        print(f"BMI Category: {bmi_category(bmi)}")
+    #Will remind and tell the user to enter integers 
+    except ValueError:
+        print("Cannot enter non-numerical values.")
 
-if (bmi < 18.5): #Each if and elif loop will sort out the users calculated BMI to understand and display what weight category they are in
-    print("You are in the underweight category.")
-elif(18.5 <= bmi <= 24.9):
-    print("You are in the normal weight category.")
-elif(25 <= bmi < 29.9):
-    print("You are in the overweight category.")
-elif(bmi >= 30):
-    print("You are in the obese category.")
+main()
